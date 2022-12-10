@@ -1,0 +1,42 @@
+<div style="padding: 20px;">
+  <nz-table style="border: 1px solid grey;" #IconsTable [nzData]="AllIconsData" [nzFrontPagination]="false" [nzTotal]="AllIconsTotal" [nzPageSize]="AllIconsPageSize" [nzPageIndex]="AllIconsPageIndex" (nzQueryParams)="IconsTableOnQueryParamsChange($event)">
+    <thead>
+      <tr>
+        <th>IconId</th>
+        <th>Catagory</th>
+        <th>IconName</th>
+        <th>PreviewImage</th>
+        <th>Website</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let data of IconsTable.data" style="cursor: pointer;" (click)="OpenIcon(data)">
+        <td>{{ data.IconId }}</td>
+        <td>{{ data.Catagory }}</td>
+        <td>{{ data.IconName }}</td>
+        <td><img [src]="data.PreviewImage" width="30px" height="30px"></td>
+        <td>{{ data.Website }}</td>
+      </tr>
+    </tbody>
+  </nz-table>
+</div>
+
+<nz-modal [(nzVisible)]="ShowIconModal" [nzTitle]="OpenedIcon.IconName" (nzOnCancel)="HideIconModal()" nzCentered nzWidth="80vw">
+  <ng-container *nzModalContent>
+    <div nz-row>
+      <div nz-col nzXs="12" nzSm="12" nzMd="6" nzLg="6" nzXl="4" *ngFor="let data of IconStyleData">
+        <div class="IconStyleContainer">
+          <span class="card" (click)="IconStyleClicked(data)">
+            <div>
+              <span [innerHTML]="data.SVG | safeHtml"></span>
+            </div>
+            <div>{{data.Type}}</div>
+          </span>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+  <ng-container *nzModalFooter>
+
+  </ng-container>
+</nz-modal>
